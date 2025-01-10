@@ -1,3 +1,7 @@
+import config from "../../config/config.js";
+import packetName from "../../protobuf/packet-names.js";
+import createPacket from "../../utils/make-packet/create-packet.js";
+
 class User {
   constructor(userId, socket) {
     this.id = userId;
@@ -18,9 +22,18 @@ class User {
     return ++this.sequence;
   }
 
-  ping() {}
+  ping() {
+    const now = Date.now();
+    const pingPacket = createPacket({ now }, packetName.common.Ping, config.packet.type.ping);
+    console.log(`ping : ${this.id}`);
+    this.socket.write(pingPacket);
+  }
 
-  pong() {}
+  pong(data) {
+    const now = Date.now();
+    this.latency = (now - data.timestamp) / 2;
+    console.log(`pong : ${this.id}`);
+  }
 
   calculatePos(latency) {}
 }

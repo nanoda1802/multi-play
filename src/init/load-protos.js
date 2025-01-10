@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import protobuf from "protobufjs";
-import packetNames from "../protobuf/packet-names.js";
 
 /* proto 데이터에 접근하는 과정 */
 const __filename = fileURLToPath(import.meta.url); // [1] 현 파일의 시스템 경로
@@ -21,7 +20,7 @@ const getAllPaths = (base, pathList = []) => {
     const filePath = path.join(base, file);
     if (fs.statSync(filePath).isDirectory()) {
       getAllPaths(filePath, pathList); // 내용물이 폴더면 그 폴더의 내용물에 재귀 실행
-    } else if (path.extname(file) === `proto`) {
+    } else if (path.extname(file) === `.proto`) {
       pathList.push(filePath);
     }
   });
@@ -34,13 +33,18 @@ const protoPaths = getAllPaths(basePath);
 /* proto 파일 불러와서 객체로 만드는 함수 */
 // protos = { namespace01 : { type01 : "namespace01.type01" }, namespace02 : { type02 : "namespace02.type02" }, ... }
 const loadProtos = async () => {
-  const root = new protobuf.Root();
-  await Promise.all(protoPaths.map((file) => root.load(file)));
-  for (const [namespace, types] of Object.entries(packetNames)) {
-    protos[namespace] = {};
-    for (const [type, typeName] of Object.entries(types)) {
-      protos[namespace][type] = root.lookupType(typeName);
+  try {
+    const root = new protobuf.Root();
+    await Promise.all(protoPaths.map((file) => root.load(file)));
+    for (const [namespace, types] of Object.entries(packetNames)) {
+      protos[namespace] = {};
+      for (const [type, typeName] of Object.entries(types)) {
+        protos[namespace][type] = root.lookupType(typeName);
+      }
     }
+    console.log(`프로토 로드 성공!!`);
+  } catch (err) {
+    throw new Error(`프로토 로드 실패!! : ${err}`);
   }
 };
 

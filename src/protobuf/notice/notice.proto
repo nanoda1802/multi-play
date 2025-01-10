@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package notice;
+
+message UpdateLocation {
+  repeated UserLocation users = 1;
+
+  message UserLocation {
+  string userId = 1;
+  float x = 2;
+  float y = 3;
+  }
+}
+
+message StartGame {
+  string roomId = 1;
+  int64 timestamp = 2;
+}

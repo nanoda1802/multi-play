@@ -21,7 +21,7 @@ const createPool = (db) => {
     const date = new Date();
     console.log(`${formatDate(date)}에 실행된 쿼리 : ${sql}`);
     console.log(`쿼리의 매개변수 : ${params ? `, ${JSON.stringify(params)}` : `none`}`);
-    return originalQuery.call(pool, sql, params);
+    return originalQuery.call(pool, sql, params); // this를 pool에 바인딩 후 기존 쿼리 즉시 실행
   };
   // [4] 맞춤형 풀 반환
   return pool;

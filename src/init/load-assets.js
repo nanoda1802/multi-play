@@ -26,9 +26,13 @@ const readFile = (filename) => {
 
 /* assets 데이터를 위에 만든 객체에 넣는 함수 */
 const loadAssets = async () => {
-  const [stages, items, itemUnlocks] = await Promise.all([readFile(`stage.json`), readFile(`item.json`), readFile(`item_unlock.json`)]);
-  assets = { stages, items, itemUnlocks };
-  return assets;
+  try {
+    const [stages, items, itemUnlocks] = await Promise.all([readFile(`stage.json`), readFile(`item.json`), readFile(`item_unlock.json`)]);
+    assets = { stages, items, itemUnlocks };
+    return assets;
+  } catch (err) {
+    throw new Error(`에셋 로드 실패!! : ${err}`);
+  }
 };
 
 /* assets 객체 데려오는 함수 */
