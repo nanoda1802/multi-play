@@ -6,8 +6,8 @@ export const PACKET_TYPE_LENGTH = 1;
 
 /* 패킷 타입 매핑 */
 export const PACKET_TYPE = {
-  GAME_START: 1,
-  NORMAL: 2,
-  PING: 3,
+  NORMAL: 1,
+  PING: 2,
+  GAME_START: 3,
   LOCATION: 4,
 };

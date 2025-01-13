@@ -35,7 +35,7 @@ const joinGameHandler = async ({ socket, userId, payload }) => {
     const response = createPacket(responsePayload, packetNames.game.JoinGame);
     socket.write(response);
   } catch (err) {
-    errorHandler({ socket, err });
+    errorHandler({ socket, userId, err });
   }
 };
 

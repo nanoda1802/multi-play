@@ -1,4 +1,4 @@
-import { getProtos } from "../../../init/load-protos.js";
+import { getProtos } from "../../init/load-protos.js";
 import attachHeader from "./attach-header.js";
 
 /* 패킷 생성하기 */

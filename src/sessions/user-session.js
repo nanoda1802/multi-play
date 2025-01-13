@@ -1,3 +1,5 @@
+import User from "../classes/models/user-model.js";
+
 /* 접속 중인 유저 관리 위한 세션 */
 const userSocketSession = new Map(); // socket이 key
 const userIdSession = new Map(); // userId가 key

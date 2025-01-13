@@ -2,6 +2,7 @@ import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import protobuf from "protobufjs";
+import packetNames from "../protobuf/packet-names.js";
 
 /* proto 데이터에 접근하는 과정 */
 const __filename = fileURLToPath(import.meta.url); // [1] 현 파일의 시스템 경로

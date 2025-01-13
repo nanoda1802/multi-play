@@ -8,7 +8,7 @@ const initServer = async () => {
   try {
     await loadAssets();
     await loadProtos();
-    // await testAllDatabases(pools);
+    await testAllDatabases(pools);
   } catch (err) {
     console.error(err);
     process.exit(1);

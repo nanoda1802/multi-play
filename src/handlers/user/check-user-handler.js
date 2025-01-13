@@ -1,5 +1,5 @@
 import config from "../../config/config.js";
-import { addUser } from "../../sessions/user-session.js";
+import { addUser, getNextSequence } from "../../sessions/user-session.js";
 import { createUser, findUserByDeviceId, updateUserLogin } from "../../database/user/user-db.js";
 import packetNames from "../../protobuf/packet-names.js";
 import createPacket from "../../utils/make-packet/create-packet.js";
@@ -31,11 +31,12 @@ const checkUserHandler = async ({ socket, userId, payload }) => {
       data: Buffer.from(JSON.stringify(data)),
       sequence: getNextSequence(userId),
     };
+    console.log("responsePayload : ", responsePayload);
     // [6] 응답 패킷 만들어 보내기
-    const response = createPacket(responsePayload, packetNames.user.CheckUser);
+    const response = createPacket(responsePayload, packetNames.response.ResponseMessage, config.packet.type.normal);
     socket.write(response);
   } catch (err) {
-    errorHandler({ socket, err });
+    errorHandler({ socket, userId, err });
   }
 };
 

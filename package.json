@@ -5,7 +5,8 @@
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
-    "dev": "nodemon src/sever.js"
+    "dev": "nodemon src/sever.js",
+    "migrate": "node src/database/migrations/createSchemas.js"
   },
   "type": "module",
   "keywords": [],

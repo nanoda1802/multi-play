@@ -1,3 +1,3 @@
-const onEnd = (socket) => {};
+const onEnd = (socket) => () => {};
 
 export default onEnd;

@@ -3,13 +3,13 @@ import { getNextSequence } from "../../sessions/user-session.js";
 import packetNames from "../../protobuf/packet-names.js";
 import createPacket from "../../utils/make-packet/create-packet.js";
 
-const errorHandler = ({ socket, err }) => {
+const errorHandler = ({ socket, userId, err }) => {
   // [1] 서버에 오류 출력
-  let errorCode = err.code;
+  let errorCode = err.code || `알 수 없는`;
   let message = err.message;
-  console.error(`${errorCode}번 에러!! : ${message}`);
+  console.error(`${errorCode} 에러!! : ${err}`);
   // [2] 응답 데이터 준비
-  const data = { message: `${errorCode}번 에러!! : ${message}` };
+  const data = { message: `${errorCode} 에러!! : ${message}` };
   // [3] 응답 페이로드 객체 만들기
   const responsePayload = {
     handlerId: config.handler.ids.error,
@@ -19,7 +19,7 @@ const errorHandler = ({ socket, err }) => {
     sequence: getNextSequence(userId),
   };
   // [4] 응답 패킷 만들어 보내기
-  const response = createPacket(responsePayload, packetNames.response.ResponseMessage);
+  const response = createPacket(responsePayload, packetNames.response.ResponseMessage, config.packet.type.normal);
   socket.write(response);
 };
 

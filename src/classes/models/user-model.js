@@ -24,7 +24,7 @@ class User {
 
   ping() {
     const now = Date.now();
-    const pingPacket = createPacket({ now }, packetName.common.Ping, config.packet.type.ping);
+    const pingPacket = createPacket({ timestamp: now }, packetName.common.Ping, config.packet.type.ping);
     console.log(`ping : ${this.id}`);
     this.socket.write(pingPacket);
   }

@@ -19,8 +19,8 @@ const createPool = (db) => {
   // [3] 쿼리 메서드에 로그 출력 기능 추가
   pool.query = (sql, params) => {
     const date = new Date();
-    console.log(`${formatDate(date)}에 실행된 쿼리 : ${sql}`);
-    console.log(`쿼리의 매개변수 : ${params ? `, ${JSON.stringify(params)}` : `none`}`);
+    console.log(`${date}에 실행된 쿼리 : ${sql}`);
+    console.log(`쿼리의 매개변수 : ${params ? `${JSON.stringify(params)}` : `none`}`);
     return originalQuery.call(pool, sql, params); // this를 pool에 바인딩 후 기존 쿼리 즉시 실행
   };
   // [4] 맞춤형 풀 반환
