@@ -4,7 +4,7 @@ import config from "../../config/config.js";
 const attachHeader = ({ packet, type }) => {
   // [1] 환경변수에서 패킷 헤더 관련 정보 가져오기
   const { packet: packetConfig } = config;
-  console.log("message : ", packet);
+  console.log("packet : ", packet);
   // [2] 패킷 총 길이 정보 -> 4 Byte 버퍼
   const packetTotalLength = Buffer.alloc(packetConfig.totalLength);
   packetTotalLength.writeUInt32BE(packet.length + packetConfig.totalLength + packetConfig.typeLength);

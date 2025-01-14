@@ -5,7 +5,7 @@ import packetNames from "../../protobuf/packet-names.js";
 import createPacket from "../../utils/make-packet/create-packet.js";
 import errorHandler from "../error/error-handler.js";
 
-const checkUserHandler = async ({ socket, userId, payload }) => {
+const initUserHandler = async ({ socket, userId, payload }) => {
   try {
     // [1] deviceId로 유저 찾아보기
     const { deviceId } = payload;
@@ -18,26 +18,31 @@ const checkUserHandler = async ({ socket, userId, payload }) => {
     }
     // [3] 유저 세션에 해당 유저 추가
     addUser(user.id, socket);
+
     // [4] 응답 데이터 준비
     const data = {
       userId: user.id,
       message: `게임에 접속하신 걸 환영합니다!! : ${user.id}`,
+      x: 0, // 나중에 마지막 저장 위치 ㄱㄱ혀
+      y: 0, // 나중에 마지막 저장 위치 ㄱㄱ혀
     };
+
     // [5] 응답 페이로드 객체 만들기
     const responsePayload = {
-      handlerId: config.handler.ids.checkUser,
+      handlerId: config.handler.ids.initUser,
       responseCode: config.handler.responseCode.success,
       timestamp: Date.now(),
       data: Buffer.from(JSON.stringify(data)),
       sequence: getNextSequence(userId),
     };
-    console.log("responsePayload : ", responsePayload);
+
     // [6] 응답 패킷 만들어 보내기
-    const response = createPacket(responsePayload, packetNames.response.ResponseMessage, config.packet.type.normal);
+    const response = createPacket(responsePayload, packetNames.response.Response, config.packet.type.normal);
+    console.log("response : ", response);
     socket.write(response);
   } catch (err) {
     errorHandler({ socket, userId, err });
   }
 };
 
-export default checkUserHandler;
+export default initUserHandler;

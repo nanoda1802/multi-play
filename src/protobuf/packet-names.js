@@ -1,10 +1,10 @@
 const packetNames = {
   common: {
-    Packet: `common.Packet`,
+    CommonPacket: `common.CommonPacket`,
     Ping: `common.Ping`,
   },
-  user: {
-    CheckUser: `user.CheckUser`,
+  initial: {
+    InitialPayload: `initial.InitialPayload`,
   },
   game: {
     CreateGame: `game.CreateGame`,
@@ -12,10 +12,10 @@ const packetNames = {
     UpdateLocation: `game.UpdateLocation`,
   },
   response: {
-    ResponseMessage: `response.ResponseMessage`,
+    Response: `response.Response`,
   },
   notice: {
-    UpdateLocation: `notice.UpdateLocation`,
+    UpdateLocation: `notice.LocationUpdate`,
     StartGame: `notice.StartGame`,
   },
 };

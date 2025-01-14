@@ -7,8 +7,9 @@ import { getUserById, getUserBySocket } from "../../sessions/user-session.js";
 const errorCodes = config.error.codes;
 
 const normalPacketParser = (data) => {
+  console.log(data);
   const protoMessages = getProtos();
-  const packet = protoMessages.common.Packet;
+  const packet = protoMessages.common.CommonPacket;
   let decodedPacket;
   try {
     decodedPacket = packet.decode(data);

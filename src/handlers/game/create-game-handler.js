@@ -32,7 +32,7 @@ const createGameHandler = async ({ socket, userId, payload }) => {
       sequence: getNextSequence(userId),
     };
     // [5] 응답 패킷 만들어 보내기
-    const response = createPacket(responsePayload, packetNames.response.ResponseMessage, config.packet.type.normal);
+    const response = createPacket(responsePayload, packetNames.response.Response, config.packet.type.normal);
     socket.write(response);
   } catch (err) {
     errorHandler({ socket, userId, err });

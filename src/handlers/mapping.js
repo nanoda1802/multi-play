@@ -1,6 +1,6 @@
 import config from "../config/config.js";
 import packetNames from "../protobuf/packet-names.js";
-import checkUserHandler from "./user/check-user-handler.js";
+import initUserHandler from "./user/init-user-handler.js";
 import createGameHandler from "./game/create-game-handler.js";
 import joinGameHandler from "./game/join-game-handler.js";
 import updateLocationHandler from "./game/update-location-handler.js";
@@ -8,9 +8,9 @@ import CustomError from "../utils/error/customError.js";
 
 /* 핸들러 관리 */
 const handlers = {
-  [config.handler.ids.checkUser]: {
-    handler: checkUserHandler,
-    packetName: packetNames.user.CheckUser,
+  [config.handler.ids.initUser]: {
+    handler: initUserHandler,
+    packetName: packetNames.initial.InitialPayload,
   },
   [config.handler.ids.createGame]: {
     handler: createGameHandler,

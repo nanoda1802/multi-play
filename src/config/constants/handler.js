@@ -5,7 +5,7 @@ export const RESPONSE_CODE = {
 
 export const HANDLER_IDS = {
   ERROR: 99,
-  CHECK_USER: 16,
+  INIT_USER: 16,
   CREATE_GAME: 65,
   JOIN_GAME: 25,
   UPDATE_LOCATION: 44,

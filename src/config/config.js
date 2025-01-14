@@ -43,7 +43,7 @@ const config = {
     },
     ids: {
       error: HANDLER_IDS.ERROR,
-      checkUser: HANDLER_IDS.CHECK_USER,
+      initUser: HANDLER_IDS.INIT_USER,
       createGame: HANDLER_IDS.CREATE_GAME,
       joinGame: HANDLER_IDS.JOIN_GAME,
       updateLocation: HANDLER_IDS.UPDATE_LOCATION,

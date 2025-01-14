@@ -18,6 +18,7 @@ const onData = (socket) => async (data) => {
       // [A-1] 패킷에서 페이로드만 추출
       const Packet = socket.buffer.slice(headerLength, packetLength);
       socket.buffer = socket.buffer.slice(packetLength);
+      console.log("???????? : ", socket.buffer);
       // [A-2] 패킷 타입에 따라 알맞은 핸들링
       switch (packetType) {
         case packetConfig.type.normal:
