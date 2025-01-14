@@ -2,7 +2,6 @@ import { v4 as uuidv4 } from "uuid";
 import config from "../../config/config.js";
 import { addRoom } from "../../sessions/room-session.js";
 import { getUserById } from "../../sessions/user-session.js";
-import { getNextSequence } from "../../sessions/user-session.js";
 import packetNames from "../../protobuf/packet-names.js";
 import createPacket from "../../utils/make-packet/create-packet.js";
 import CustomError from "../../utils/error/customError.js";
@@ -29,7 +28,6 @@ const createGameHandler = async ({ socket, userId, payload }) => {
       responseCode: config.handler.responseCode.success,
       timestamp: Date.now(),
       data: Buffer.from(JSON.stringify(data)),
-      sequence: getNextSequence(userId),
     };
     // [5] 응답 패킷 만들어 보내기
     const response = createPacket(responsePayload, packetNames.response.Response, config.packet.type.normal);

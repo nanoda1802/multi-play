@@ -5,8 +5,8 @@ const userSocketSession = new Map(); // socket이 key
 const userIdSession = new Map(); // userId가 key
 
 /* 신규 접속 유저 세션에 추가 */
-const addUser = (userId, socket) => {
-  const newUser = new User(userId, socket);
+const addUser = (userId, socket, initX, initY) => {
+  const newUser = new User(userId, socket, initX, initY);
   const userAddress = `${socket.remoteAddress}:${socket.remotePort}`;
   userSocketSession.set(userAddress, newUser);
   userIdSession.set(userId, newUser);
@@ -33,7 +33,7 @@ const getUserBySocket = (socket) => {
   return userSocketSession.get(userAddress); // 못 찾으면 undefined 반환
 };
 
-/* 유저의 다음 시퀀스 확인 */
+/* (사용 X) 유저의 다음 시퀀스 확인 */
 const getNextSequence = (userId) => {
   const user = userIdSession.get(userId);
   return user ? user.updateSequence() : 0;

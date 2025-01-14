@@ -7,7 +7,6 @@ message CommonPacket {
   string userId = 2;         
   string clientVersion = 3;  
   bytes payload = 4;        
-  uint32 sequence = 5;       
 }
 
 message Ping {

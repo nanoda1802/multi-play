@@ -1,6 +1,6 @@
 import config from "../config/config.js";
 import { getHandlerById } from "../handlers/mapping.js";
-import { normalPacketParser, pingPacketParser } from "../utils/parser/packet-parser.js";
+import { normalPacketParser, pongPacketParser } from "../utils/parser/packet-parser.js";
 
 const onData = (socket) => async (data) => {
   // [1] 소켓의 버퍼 속성에 새로 받은 버퍼 데이터 이어붙입
@@ -18,7 +18,6 @@ const onData = (socket) => async (data) => {
       // [A-1] 패킷에서 페이로드만 추출
       const Packet = socket.buffer.slice(headerLength, packetLength);
       socket.buffer = socket.buffer.slice(packetLength);
-      console.log("???????? : ", socket.buffer);
       // [A-2] 패킷 타입에 따라 알맞은 핸들링
       switch (packetType) {
         case packetConfig.type.normal:
@@ -27,7 +26,7 @@ const onData = (socket) => async (data) => {
           await handler({ socket, userId, payload });
           break;
         case packetConfig.type.ping:
-          const { decodedPacket: pingMessage, user } = pingPacketParser(Packet, socket);
+          const { decodedPacket: pingMessage, user } = pongPacketParser(Packet, socket);
           user.pong(pingMessage);
           break;
         case packetConfig.type.gameStart:

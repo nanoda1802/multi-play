@@ -9,12 +9,10 @@ const createPacket = (payload, packetName, packetType) => {
   const protoMessages = getProtos();
   const Proto = protoMessages[Package][Name];
   // [2] 응답 객체 버퍼로 변환
-  console.log("Proto : ", Proto);
   const message = Proto.create(payload);
-  console.log("message : ", message);
   const packet = Proto.encode(message).finish();
   // [3] 헤더와 결합해 만든 패킷 반환
-  return attachHeader({ packet, packetType });
+  return attachHeader({ packet, type: packetType });
 };
 
 export default createPacket;

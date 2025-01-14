@@ -1,5 +1,4 @@
 import config from "../../config/config.js";
-import { getNextSequence } from "../../sessions/user-session.js";
 import packetNames from "../../protobuf/packet-names.js";
 import createPacket from "../../utils/make-packet/create-packet.js";
 
@@ -16,7 +15,6 @@ const errorHandler = ({ socket, userId, err }) => {
     responseCode: config.handler.responseCode.fail,
     timestamp: Date.now(),
     data: Buffer.from(JSON.stringify(data)),
-    sequence: getNextSequence(userId),
   };
   // [4] 응답 패킷 만들어 보내기
   const response = createPacket(responsePayload, packetNames.response.Response, config.packet.type.normal);

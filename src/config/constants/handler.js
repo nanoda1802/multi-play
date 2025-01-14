@@ -1,6 +1,6 @@
 export const RESPONSE_CODE = {
-  SUCCESS: 1,
-  FAIL: 0,
+  SUCCESS: 0,
+  FAIL: 1,
 };
 
 export const HANDLER_IDS = {

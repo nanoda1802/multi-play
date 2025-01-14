@@ -16,7 +16,7 @@ import {
 import { HANDLER_IDS, RESPONSE_CODE } from "./constants/handler.js";
 import { PACKET_TOTAL_LENGTH, PACKET_TYPE_LENGTH, PACKET_TYPE } from "./constants/header.js";
 import { ERROR_CODES } from "./constants/error.js";
-import { MAX_PLAYER, MIN_PLAYER } from "./constants/room.js";
+import { MAX_PLAYER, MIN_PLAYER, ROOM_ID } from "./constants/room.js";
 
 const config = {
   server: {
@@ -52,6 +52,7 @@ const config = {
   room: {
     maxPlayer: MAX_PLAYER,
     minPlayer: MIN_PLAYER,
+    id: ROOM_ID,
   },
   database: {
     GAME_DB: {

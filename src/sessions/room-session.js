@@ -24,7 +24,7 @@ const getRoom = (roomId) => {
 
 /* 실행 중인 모든 룸 조회하기 */
 const getAllRooms = () => {
-  return Object.fromEntries(roomSession);
+  return roomSession;
 };
 
 /* 룸 세션 비우기 */

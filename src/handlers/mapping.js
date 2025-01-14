@@ -22,7 +22,7 @@ const handlers = {
   },
   [config.handler.ids.updateLocation]: {
     handler: updateLocationHandler,
-    packetName: packetNames.game.UpdateLocation,
+    packetName: packetNames.game.LocationUpdatePayload,
   },
 };
 
