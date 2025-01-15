@@ -9,10 +9,11 @@ const onEnd = (socket) => async () => {
   removeUser(socket);
   // console.log("2) 세션 제거 후 : ", getUserSession());
   const room = getRoom(user.roomId);
-  // console.log("3) 룸 강퇴 전 : ", room);
+  console.log("3) 룸 강퇴 전 : ", room);
   room.removeUser(user.id);
   console.log("4) 룸 강퇴 후 : ", room);
   socket.end();
+  socket.destroy();
   await recordLastPosition(user.id, user.x, user.y);
 };
 

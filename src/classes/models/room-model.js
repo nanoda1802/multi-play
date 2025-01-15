@@ -65,6 +65,7 @@ class Room {
     this.users.forEach((user, userId) => {
       users.push({ userId, playerId: user.playerId, x: user.x, y: user.y });
     });
+    // console.log("!!!!! users !!!!! ", users);
     return createPacket({ users }, packetNames.notice.LocationUpdate, config.packet.type.location);
   }
 
