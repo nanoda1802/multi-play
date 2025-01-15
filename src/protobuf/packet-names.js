@@ -15,7 +15,7 @@ const packetNames = {
     Response: `response.Response`,
   },
   notice: {
-    UpdateLocation: `notice.LocationUpdate`,
+    LocationUpdate: `notice.LocationUpdate`,
     StartGame: `notice.StartGame`,
   },
 };

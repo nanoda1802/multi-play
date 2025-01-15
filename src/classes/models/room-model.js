@@ -16,7 +16,7 @@ class Room {
     if (this.users.length >= config.room.maxPlayer) {
       throw new CustomError(config.error.codes.roomIsFull, `${this.id}번 방은 이미 플레이어가 꽉 찼슴다!!`);
     }
-    user.room = this.id;
+    user.roomId = this.id;
     this.users.set(user.id, user);
     // 사용자 핑 5초마다 체크 -> 내가 임의로 지정
     this.intervalManager.addPlayer(user.id, user.ping.bind(user), 5000);
@@ -43,24 +43,41 @@ class Room {
     for (let user of this.users.values()) {
       maxLatency = maxLatency > user.latency ? maxLatency : user.latency;
     }
-    console.log(`${this.id}번 방의 최대 지연시간 : ${maxLatency}`);
+    // console.log(`${this.id}번 방의 최대 지연시간 : ${maxLatency}`);
     return maxLatency;
   }
 
+  // getAllLocation(myId, velocityX, velocityY) {
+  //   const maxLatency = this.getMaxLatency();
+  //   const users = [];
+  //   this.users.forEach((user, userId) => {
+  //     const { x, y } = user.calculatePosition(maxLatency, velocityX, velocityY);
+  //     // if (userId === myId) return;
+  //     user.x = x;
+  //     user.y = y;
+  //     users.push({ userId, playerId: user.playerId, x, y });
+  //   });
+  //   return createPacket({ users }, packetNames.notice.LocationUpdate, config.packet.type.location);
+  // }
+
   getAllLocation() {
-    const maxLatency = this.getMaxLatency();
     const users = [];
     this.users.forEach((user, userId) => {
-      const { x, y } = user.calculatePosition(maxLatency);
-      user.x = x;
-      user.y = y;
-      users.push({ userId, playerId: user.playerId, x, y });
+      users.push({ userId, playerId: user.playerId, x: user.x, y: user.y });
     });
-
-    return createPacket({ users }, packetNames.notice.UpdateLocation, config.packet.type.location);
+    return createPacket({ users }, packetNames.notice.LocationUpdate, config.packet.type.location);
   }
 
-  startGame() {}
+  startGame() {
+    this.state = "inProgress";
+    const payload = { roomId: this.id, timestamp: Date.now() };
+    const startNotice = createPacket(payload, packetNames.notice.StartGame, config.packet.type.gameStart); // 게임 시작 알림 패킷 생성
+
+    // 모든 사용자에게 게임 시작 패킷 전송
+    this.users.forEach((user) => {
+      user.socket.write(startNotice);
+    });
+  }
 }
 
 export default Room;

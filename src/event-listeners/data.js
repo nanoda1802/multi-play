@@ -27,7 +27,7 @@ const onData = (socket) => async (data) => {
           break;
         case packetConfig.type.ping:
           const { decodedPacket: pingMessage, user } = pongPacketParser(Packet, socket);
-          user.pong(pingMessage);
+          if (pingMessage) user.pong(pingMessage);
           break;
         case packetConfig.type.gameStart:
           break;

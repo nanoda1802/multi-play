@@ -6,14 +6,14 @@ class User {
   constructor(userId, socket, initX, initY) {
     this.id = userId;
     this.socket = socket;
-    this.room = "";
+    this.roomId = "";
     this.x = initX;
     this.y = initY;
     this.sequence = 0; // (사용 X)
     this.updatedAt = Date.now();
   }
 
-  updatePos(x, y) {
+  updatePosition(x, y) {
     this.x = x;
     this.y = y;
     this.updatedAt = Date.now();
@@ -38,11 +38,13 @@ class User {
   }
 
   // 클라에 맞게 수정해야함
-  calculatePos(latency) {
+  calculatePosition(latency, velocityX, velocityY) {
     const timeDiff = latency / 1000;
-    const speed = 1;
-    const distance = speed * timeDiff;
-    return { x: this.x + distance, y: this.y };
+    const SPEED = 3;
+    const distanceX = SPEED * velocityX * timeDiff;
+    const distanceY = SPEED * velocityY * timeDiff;
+    this.updatePosition(this.x + distanceX, this.y + distanceY);
+    return { x: this.x, y: this.y };
   }
 }
 
