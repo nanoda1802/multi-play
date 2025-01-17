@@ -13,13 +13,14 @@ const initUserHandler = async ({ socket, userId, payload }) => {
     let user = await findUserByDeviceId(deviceId);
     // [2] 신규 유저면 db에 정보 생성하고, 기존 유저면 로그인 시킴
     if (!user) {
-      await createUser(deviceId);
-      user = await findUserByDeviceId(deviceId);
+      user = await createUser(deviceId);
     } else {
       await updateUserLogin(user.id);
     }
     // [3] 유저 세션에 해당 유저 추가 및 속성 추가
-    user = addUser(user.id, socket, user.last_x, user.last_y);
+    const initX = user.last_x || 0;
+    const initY = user.last_y || 0;
+    user = addUser(user.id, socket, initX, initY);
     user.playerId = playerId;
     user.latency = latency;
     // [3-2] 게임 세션에도 참가
@@ -29,8 +30,8 @@ const initUserHandler = async ({ socket, userId, payload }) => {
     const data = {
       userId: user.id,
       message: `게임에 접속하신 걸 환영합니다!!`,
-      x: user.last_x,
-      y: user.last_y,
+      x: initX,
+      y: initY,
     };
     // [5] 응답 페이로드 객체 만들기
     const responsePayload = {
