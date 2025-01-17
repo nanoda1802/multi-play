@@ -7,7 +7,7 @@ import createPacket from "../../utils/make-packet/create-packet.js";
 import CustomError from "../../utils/error/customError.js";
 import errorHandler from "../error/error-handler.js";
 
-/* 게임 방 생성 요청 핸들러 */
+/* (사용 X) 게임 방 생성 요청 핸들러 */
 const createGameHandler = async ({ socket, userId, payload }) => {
   try {
     // [1] 신규 룸 아이디 생성 후 룸 세션에 추가

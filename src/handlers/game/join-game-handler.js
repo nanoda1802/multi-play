@@ -6,6 +6,7 @@ import createPacket from "../../utils/make-packet/create-packet.js";
 import CustomError from "../../utils/error/customError.js";
 import errorHandler from "../error/error-handler.js";
 
+/* (사용 X) 룸 참가 요청 핸들러 */
 const joinGameHandler = async ({ socket, userId, payload }) => {
   try {
     // [1] 참가 요청한 방 찾기

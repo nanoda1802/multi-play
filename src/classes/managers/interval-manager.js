@@ -6,8 +6,7 @@ class IntervalManager extends BaseManager {
     this.intervals = new Map();
   }
 
-  // add 하나로 합치기 -> addInterval
-  // 타입별로 구분
+  /* 유저에게 인터벌 부여 */
   addPlayer(playerId, callback, interval, type = `user`) {
     if (!this.intervals.has(playerId)) {
       this.intervals.set(playerId, new Map());
@@ -23,7 +22,7 @@ class IntervalManager extends BaseManager {
   //   this.addPlayer(playerId, callback, interval, `updatePosition`);
   // }
 
-  // remove도 합칠 방법 생각해보기
+  /* 인터벌 세션에서 유저 제거 */
   removePlayer(playerId) {
     if (this.intervals.has(playerId)) {
       const userIntervals = this.intervals.get(playerId);
@@ -32,7 +31,8 @@ class IntervalManager extends BaseManager {
     }
   }
 
-  removeInterval(playerId, type) {
+  /* 유저의 인터벌 제거 */
+  removeInterval(playerId, type = `user`) {
     if (this.intervals.has(playerId)) {
       const userIntervals = this.intervals.get(playerId);
       if (userIntervals.has(type)) {
@@ -42,6 +42,7 @@ class IntervalManager extends BaseManager {
     }
   }
 
+  /* 인터벌 세션 클리어 */
   clearAll() {
     this.intervals.forEach((userIntervals) => {
       userIntervals.forEach((interval) => clearInterval(interval));

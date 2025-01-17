@@ -8,7 +8,6 @@ const testDatabase = async (pool, dbName) => {
 };
 
 const testAllDatabases = async (pools) => {
-  await testDatabase(pools.GAME_DB, "GAME_DB");
   await testDatabase(pools.USER_DB, "USER_DB");
 };
 

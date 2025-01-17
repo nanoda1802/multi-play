@@ -29,7 +29,6 @@ const createPool = (db) => {
 
 /* 데이터베이스 풀 보관 객체 */
 const pools = {
-  GAME_DB: createPool(config.database.GAME_DB),
   USER_DB: createPool(config.database.USER_DB),
 };
 

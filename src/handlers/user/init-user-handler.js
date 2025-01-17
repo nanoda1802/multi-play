@@ -24,7 +24,6 @@ const initUserHandler = async ({ socket, userId, payload }) => {
     // [3-2] 게임 세션에도 참가
     const room = getRoom(config.room.id);
     room.addUser(user);
-    // console.log("!!! 룸 접속 유저 확인 : ", room.users);
     // [4] 응답 데이터 준비
     const data = {
       userId: user.id,

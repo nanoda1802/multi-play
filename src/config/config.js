@@ -56,13 +56,6 @@ const config = {
     id: ROOM_ID,
   },
   database: {
-    GAME_DB: {
-      name: DB1_NAME,
-      user: DB1_USER,
-      password: DB1_PASSWORD,
-      host: DB1_HOST,
-      port: DB1_PORT,
-    },
     USER_DB: {
       name: DB2_NAME,
       user: DB2_USER,

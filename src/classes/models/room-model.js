@@ -14,6 +14,7 @@ class Room {
     this.state = `waiting`;
   }
 
+  /* 룸에 유저 추가 */
   addUser(user) {
     if (this.users.length >= config.room.maxPlayer) {
       throw new CustomError(config.error.codes.roomIsFull, `${this.id}번 방은 이미 플레이어가 꽉 찼슴다!!`);
@@ -21,13 +22,14 @@ class Room {
     user.roomId = this.id;
     this.users.set(user.id, user);
     this.chatManager.addPlayer(user.id);
-    // 사용자 핑 5초마다 체크 -> 내가 임의로 지정
+    // 사용자 핑 5초마다 체크
     this.intervalManager.addPlayer(user.id, user.ping.bind(user), 5000);
-    if (this.users.length >= config.room.minPlayer) {
-      this.startGame();
-    }
+    // if (this.users.length >= config.room.minPlayer) {
+    //   this.startGame();
+    // }
   }
 
+  /* 룸에서 유저 제거 */
   removeUser(userId) {
     this.users.delete(userId);
     this.chatManager.removePlayer(userId);
@@ -38,10 +40,12 @@ class Room {
     }
   }
 
+  /* 룸에 있는 유저 정보 열람 */
   getUser(userId) {
     return this.users.get(userId);
   }
 
+  /* 룸 소속 유저들 기준 최대 지연시간 구하기 */
   getMaxLatency() {
     let maxLatency = 0;
     for (let user of this.users.values()) {
@@ -51,33 +55,20 @@ class Room {
     return maxLatency;
   }
 
-  // getAllLocation(myId, velocityX, velocityY) {
-  //   const maxLatency = this.getMaxLatency();
-  //   const users = [];
-  //   this.users.forEach((user, userId) => {
-  //     const { x, y } = user.calculatePosition(maxLatency, velocityX, velocityY);
-  //     // if (userId === myId) return;
-  //     user.x = x;
-  //     user.y = y;
-  //     users.push({ userId, playerId: user.playerId, x, y });
-  //   });
-  //   return createPacket({ users }, packetNames.notice.LocationUpdate, config.packet.type.location);
-  // }
-
+  /* 룸 소속 유저들 전부의 위치 정보 구하기 */
   getAllLocation() {
     const users = [];
     this.users.forEach((user, userId) => {
       users.push({ userId, playerId: user.playerId, x: user.x, y: user.y });
     });
-    // console.log("!!!!! users !!!!! ", users);
     return createPacket({ users }, packetNames.notice.LocationUpdate, config.packet.type.location);
   }
 
+  /* (사용 X) 룸에 속한 유저들에게 게임시작 패킷 보내기 */
   startGame() {
     this.state = "inProgress";
     const payload = { roomId: this.id, timestamp: Date.now() };
-    const startNotice = createPacket(payload, packetNames.notice.StartGame, config.packet.type.gameStart); // 게임 시작 알림 패킷 생성
-
+    const startNotice = createPacket(payload, packetNames.notice.StartGame, config.packet.type.gameStart);
     // 모든 사용자에게 게임 시작 패킷 전송
     this.users.forEach((user) => {
       user.socket.write(startNotice);
