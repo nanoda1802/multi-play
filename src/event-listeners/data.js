@@ -1,6 +1,6 @@
 import config from "../config/config.js";
 import { getHandlerById } from "../handlers/mapping.js";
-import { normalPacketParser, pongPacketParser } from "../utils/parser/packet-parser.js";
+import { chatPacketParser, normalPacketParser, pongPacketParser } from "../utils/parser/packet-parser.js";
 
 const onData = (socket) => async (data) => {
   // [1] 소켓의 버퍼 속성에 새로 받은 버퍼 데이터 이어붙입
@@ -29,9 +29,15 @@ const onData = (socket) => async (data) => {
           const { decodedPacket: pingMessage, user } = pongPacketParser(Packet, socket);
           if (pingMessage) user.pong(pingMessage);
           break;
-        case packetConfig.type.gameStart:
-          break;
-        case packetConfig.type.location:
+        // case packetConfig.type.gameStart:
+        //   break;
+        // case packetConfig.type.location:
+        //   break;
+        case packetConfig.type.chat:
+          console.log("01) 챗이 data 이벤트에서 타입 분류 성공");
+          const { chatData, chattingRoom } = chatPacketParser(Packet);
+          console.log("02) 챗 파싱 성공 : ", chatData);
+          chattingRoom.chatManager.receiveChat(chatData);
           break;
       }
     } else {

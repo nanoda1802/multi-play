@@ -6,7 +6,7 @@ import errorHandler from "../error/error-handler.js";
 
 const updateLocationHandler = async ({ socket, userId, payload }) => {
   try {
-    const { x, y } = payload;
+    const { x: vectorX, y: vectorY } = payload;
     const user = getUserById(userId);
 
     if (!user) {
@@ -18,7 +18,7 @@ const updateLocationHandler = async ({ socket, userId, payload }) => {
     const room = getRoom(user.roomId);
     const maxLatency = room.getMaxLatency();
 
-    user.calculatePosition(maxLatency, x, y);
+    user.calculatePosition(maxLatency, vectorX, vectorY);
 
     const locationResponse = room.getAllLocation();
 

@@ -34,6 +34,7 @@ const config = {
       normal: PACKET_TYPE.NORMAL,
       ping: PACKET_TYPE.PING,
       location: PACKET_TYPE.LOCATION,
+      chat: PACKET_TYPE.CHAT,
     },
   },
   handler: {

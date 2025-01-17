@@ -1,4 +1,5 @@
 import config from "../../config/config.js";
+import onEnd from "../../event-listeners/end.js";
 import packetName from "../../protobuf/packet-names.js";
 import createPacket from "../../utils/make-packet/create-packet.js";
 
@@ -9,6 +10,7 @@ class User {
     this.roomId = "";
     this.x = initX;
     this.y = initY;
+    this.pingCount = 0;
     this.sequence = 0; // (사용 X)
     this.updatedAt = Date.now();
   }
@@ -25,13 +27,19 @@ class User {
   }
 
   ping() {
+    if (this.pingCount >= 3) {
+      onEnd(this.socket)();
+      return;
+    }
     const now = Date.now();
     const pingPacket = createPacket({ timestamp: now }, packetName.common.Ping, config.packet.type.ping);
     this.socket.write(pingPacket);
     console.log(`ping : ${this.id}`);
+    this.pingCount += 1;
   }
 
   pong(data) {
+    this.pingCount = 0;
     const now = Date.now();
     this.latency = (now - data.timestamp) / 2;
     console.log(`pong(${this.latency}) : ${this.id}`);

@@ -2,12 +2,14 @@ import config from "../../config/config.js";
 import packetNames from "../../protobuf/packet-names.js";
 import CustomError from "../../utils/error/customError.js";
 import createPacket from "../../utils/make-packet/create-packet.js";
+import ChatManager from "../managers/chat-manager.js";
 import IntervalManager from "../managers/interval-manager.js";
 
 class Room {
   constructor(roomId) {
     this.id = roomId;
     this.users = new Map();
+    this.chatManager = new ChatManager(roomId);
     this.intervalManager = new IntervalManager();
     this.state = `waiting`;
   }
@@ -18,6 +20,7 @@ class Room {
     }
     user.roomId = this.id;
     this.users.set(user.id, user);
+    this.chatManager.addPlayer(user.id);
     // 사용자 핑 5초마다 체크 -> 내가 임의로 지정
     this.intervalManager.addPlayer(user.id, user.ping.bind(user), 5000);
     if (this.users.length >= config.room.minPlayer) {
@@ -27,6 +30,7 @@ class Room {
 
   removeUser(userId) {
     this.users.delete(userId);
+    this.chatManager.removePlayer(userId);
     // 인터벌 매니저에서도 제거
     this.intervalManager.removePlayer(userId);
     if (this.users.length < config.room.minPlayer) {

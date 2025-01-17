@@ -18,6 +18,10 @@ const packetNames = {
     LocationUpdate: `notice.LocationUpdate`,
     StartGame: `notice.StartGame`,
   },
+  chat: {
+    ChatPayload: `chat.ChatPayload`,
+    Echo: `chat.Echo`,
+  },
 };
 
 export default packetNames;

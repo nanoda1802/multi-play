@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package chat;
+
+message ChatPayload {
+  string userId = 1;
+  string message = 2;
+}
+
+message Echo {
+  string userId = 1;
+  string message = 2;
+  int64 timestamp = 3;
+}

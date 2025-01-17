@@ -29,8 +29,8 @@ const initUserHandler = async ({ socket, userId, payload }) => {
     const data = {
       userId: user.id,
       message: `게임에 접속하신 걸 환영합니다!!`,
-      x: user.last_x, // 나중에 마지막 저장 위치 ㄱㄱ혀
-      y: user.last_y, // 나중에 마지막 저장 위치 ㄱㄱ혀
+      x: user.last_x,
+      y: user.last_y,
     };
     // [5] 응답 페이로드 객체 만들기
     const responsePayload = {

@@ -10,4 +10,5 @@ export const PACKET_TYPE = {
   PING: 2,
   GAME_START: 3,
   LOCATION: 4,
+  CHAT: 5,
 };
