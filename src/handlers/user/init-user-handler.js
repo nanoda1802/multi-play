@@ -13,7 +13,8 @@ const initUserHandler = async ({ socket, userId, payload }) => {
     let user = await findUserByDeviceId(deviceId);
     // [2] 신규 유저면 db에 정보 생성하고, 기존 유저면 로그인 시킴
     if (!user) {
-      user = await createUser(deviceId);
+      await createUser(deviceId);
+      user = await findUserByDeviceId(deviceId);
     } else {
       await updateUserLogin(user.id);
     }
